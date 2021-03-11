@@ -12,5 +12,4 @@ class MemoryMemberRepository: MemberRepository {
     override fun findById(memberId: Long): Member? {
         return store[memberId]
     }
-
 }

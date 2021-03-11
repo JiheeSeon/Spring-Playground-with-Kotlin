@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class MemberServiceTest {
     companion object{
-        var memberService = MemberServiceImpl();
+        var memberService = MemberServiceImpl(MemoryMemberRepository());
     }
 
     @Test
