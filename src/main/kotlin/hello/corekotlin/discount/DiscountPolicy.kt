@@ -1,7 +1,7 @@
 package hello.corekotlin.discount
 
-import hello.corekotlin.member.Member
+import hello.corekotlin.member.Grade
 
 interface DiscountPolicy {
-    fun calculateDiscountPrice(member: Member?): Int
+    fun discount(price: Int, grade: Grade): Int
 }

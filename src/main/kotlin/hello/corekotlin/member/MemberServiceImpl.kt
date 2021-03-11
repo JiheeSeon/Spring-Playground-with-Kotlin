@@ -1,7 +1,6 @@
 package hello.corekotlin.member
 
-class MemberServiceImpl: MemberService {
-    var memberRepository = MemoryMemberRepository()
+class MemberServiceImpl(var memberRepository: MemberRepository): MemberService {
     override fun join(member: Member) {
         memberRepository.save(member)
     }

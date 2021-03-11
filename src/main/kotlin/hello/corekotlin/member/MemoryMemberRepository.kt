@@ -2,7 +2,7 @@ package hello.corekotlin.member
 
 class MemoryMemberRepository: MemberRepository {
     companion object{
-        var store = HashMap<Long, Member>();
+        var store = HashMap<Long, Member>()
     }
 
     override fun save(member: Member) {

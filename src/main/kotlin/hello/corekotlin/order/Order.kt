@@ -1,12 +1,7 @@
 package hello.corekotlin.order
 
-data class Order(var memberId: Long, var itemName: String, var itemPrice: Int, var discountPrice: Int) {
-    override fun toString(): String {
-        return "Order{" +
-                "memberId=" + memberId +
-                ", itemName='" + itemName + '\'' +
-                ", itemPrice=" + itemPrice +
-                ", discountPrice=" + discountPrice +
-                '}'
-    }
+import hello.corekotlin.product.Product
+
+data class Order(var orderId: Long, var memberId: Long, var amount: Int, var productId: Long, var totalPrice:Int) {
+    override fun toString() = "[Order] orderId=$orderId, memberId=$memberId, amount=$amount, productId=$productId, totalPrice=$totalPrice"
 }

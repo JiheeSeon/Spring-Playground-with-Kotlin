@@ -1,17 +1,20 @@
 package hello.corekotlin.order
 
-import hello.corekotlin.discount.FixDiscountPolicy
-import hello.corekotlin.member.MemberServiceImpl
+import hello.corekotlin.discount.DiscountPolicy
+import hello.corekotlin.member.Grade
 import hello.corekotlin.member.MemoryMemberRepository
+import hello.corekotlin.product.ProductRepository
 
-class OrderServiceImpl: OrderService {
-    var memoryMemberRepository = MemoryMemberRepository()
-    var discountPolicy = FixDiscountPolicy()
+class OrderServiceImpl(var memberRepository: MemoryMemberRepository, var orderRepository: OrderRepository, var productRepository: ProductRepository, var discountPolicy: DiscountPolicy): OrderService {
+    override fun createOrder(memberId: Long, productId: Long, amount: Int): Order {
+        val grade: Grade? = memberRepository.findById(memberId)?.grade
+        val originalPrice = productRepository.findById(productId)?.price
 
-    override fun createOrder(memberId: Long, itemName: String, price: Int): Order {
-        val member = memoryMemberRepository.findById(memberId)
-        val discountPrice = discountPolicy.calculateDiscountPrice(member)
+        val totalPrice = amount * discountPolicy.discount(originalPrice!!, grade!!) //TODO change !!
 
-        return Order(memberId, itemName, price, discountPrice)
+        val order = Order(1234, memberId, amount, productId, totalPrice)
+        orderRepository.save(order)
+
+        return order
     }
 }
