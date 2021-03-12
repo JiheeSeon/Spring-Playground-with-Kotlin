@@ -1,11 +1,13 @@
 package hello.corekotlin.member
 
+import hello.corekotlin.AppConfig
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 class MemberServiceTest {
     companion object{
-        var memberService = MemberServiceImpl(MemoryMemberRepository());
+        val appConfig = AppConfig()
+        var memberService = appConfig.memberService()
     }
 
     @Test

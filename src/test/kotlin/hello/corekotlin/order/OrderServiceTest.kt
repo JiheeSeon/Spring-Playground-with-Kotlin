@@ -1,5 +1,6 @@
 package hello.corekotlin.order
 
+import hello.corekotlin.AppConfig
 import hello.corekotlin.discount.RateDiscountPolicy
 import hello.corekotlin.member.Grade
 import hello.corekotlin.member.Member
@@ -16,17 +17,11 @@ import org.junit.jupiter.api.Test
 
 class OrderServiceTest {
     companion object {
-        val memberRepository = MemoryMemberRepository()
-        val orderRepository = MemoryOrderRepository()
-        val productRepository = ProductRepository()
+        private val appConfig = AppConfig()
 
-        //policy
-        val discountPolicy = RateDiscountPolicy()
-
-        //service
-        val memberServiceImpl = MemberServiceImpl(memberRepository)
-        val productServiceImpl = ProductServiceImpl(productRepository)
-        val orderServiceImpl = OrderServiceImpl(memberRepository, orderRepository, productRepository, discountPolicy)
+        val memberService = appConfig.memberService()
+        val productService = appConfig.productService()
+        val orderService = appConfig.orderService()
     }
 
     @BeforeEach
@@ -38,7 +33,7 @@ class OrderServiceTest {
         )
 
         for (member in membersToJoin)
-            memberServiceImpl.join(member)
+            memberService.join(member)
 
         val productsToRegister: Array<Product> = arrayOf(
             Product(11L, "Monalisa", Department.ARTS_CRAFTS, 10000000),
@@ -49,14 +44,14 @@ class OrderServiceTest {
         )
 
         for (product in productsToRegister)
-            productServiceImpl.register(product)
+            productService.register(product)
     }
 
     @Test
     fun order() {
-        assertThat(orderServiceImpl.createOrder(2L, 55L, 3).totalPrice).isEqualTo(150000)
-        assertThat(orderServiceImpl.createOrder(1L, 22L, 2).totalPrice).isEqualTo(1999998)
-        assertThat(orderServiceImpl.createOrder(1L, 11L, 1).totalPrice).isEqualTo(9000000)
-        assertThat(orderServiceImpl.createOrder(30L, 44L, 2).totalPrice).isEqualTo(3600000)
+        assertThat(orderService.createOrder(2L, 55L, 3).totalPrice).isEqualTo(150000)
+        assertThat(orderService.createOrder(1L, 22L, 2).totalPrice).isEqualTo(1999998)
+        assertThat(orderService.createOrder(1L, 11L, 1).totalPrice).isEqualTo(9000000)
+        assertThat(orderService.createOrder(30L, 44L, 2).totalPrice).isEqualTo(3600000)
     }
 }
