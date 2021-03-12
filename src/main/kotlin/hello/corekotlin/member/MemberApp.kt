@@ -1,8 +1,12 @@
 package hello.corekotlin.member
 
+import hello.corekotlin.AppConfig
+import org.springframework.context.annotation.AnnotationConfigApplicationContext
+
 class MemberApp
 fun main(args: Array<String>){
-    val memberService = MemberServiceImpl(MemoryMemberRepository())
+    val applicationContext = AnnotationConfigApplicationContext(AppConfig::class.java)
+    val memberService : MemberService = applicationContext.getBean("memberService") as MemberService
     val newMember = Member(1L, "Kotlin-Member-A", Grade.VIP)
     memberService.join(newMember)
 

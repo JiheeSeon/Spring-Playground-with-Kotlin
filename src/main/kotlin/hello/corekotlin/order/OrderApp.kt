@@ -3,17 +3,20 @@ package hello.corekotlin.order
 import hello.corekotlin.AppConfig
 import hello.corekotlin.member.Grade
 import hello.corekotlin.member.Member
+import hello.corekotlin.member.MemberService
 import hello.corekotlin.product.Department
 import hello.corekotlin.product.Product
+import hello.corekotlin.product.ProductService
+import org.springframework.beans.factory.getBean
+import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 class OrderApp
 
 fun main(args: Array<String>) {
-    val appConfig = AppConfig()
-    val memberService = appConfig.memberService()
-    val orderService = appConfig.orderService()
-    val productService = appConfig.productService()
-
+    val applicationContext = AnnotationConfigApplicationContext(AppConfig::class.java)
+    val memberService : MemberService = applicationContext.getBean("memberService") as MemberService
+    val orderService : OrderService = applicationContext.getBean("orderService") as OrderService
+    val productService : ProductService = applicationContext.getBean("productService") as ProductService
 
     val membersToJoin: Array<Member> = arrayOf(
         Member(1L, "Kotlin-lover", Grade.VIP),

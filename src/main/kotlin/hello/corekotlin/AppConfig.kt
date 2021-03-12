@@ -13,14 +13,16 @@ import hello.corekotlin.order.OrderServiceImpl
 import hello.corekotlin.product.ProductRepository
 import hello.corekotlin.product.ProductService
 import hello.corekotlin.product.ProductServiceImpl
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 
+@Configuration
 class AppConfig {
-    private fun memberRepository(): MemberRepository = MemoryMemberRepository()
-    private fun orderRepository() : OrderRepository = MemoryOrderRepository()
-    private fun productRepository() : ProductRepository = ProductRepository()
-    private fun discountPolicy(): DiscountPolicy = RateDiscountPolicy()
-
-    fun memberService() : MemberService = MemberServiceImpl(memberRepository())
-    fun orderService(): OrderService = OrderServiceImpl(memberRepository(), orderRepository(), productRepository(), discountPolicy())
-    fun productService(): ProductService = ProductServiceImpl(productRepository())
+    @Bean fun memberRepository(): MemberRepository = MemoryMemberRepository()
+    @Bean fun orderRepository() : OrderRepository = MemoryOrderRepository()
+    @Bean fun productRepository() : ProductRepository = ProductRepository()
+    @Bean fun discountPolicy(): DiscountPolicy = RateDiscountPolicy()
+    @Bean fun memberService() : MemberService = MemberServiceImpl(memberRepository())
+    @Bean fun orderService(): OrderService = OrderServiceImpl(memberRepository(), orderRepository(), productRepository(), discountPolicy())
+    @Bean fun productService(): ProductService = ProductServiceImpl(productRepository())
 }
